@@ -69,7 +69,17 @@ buttonAdd.addEventListener("click", function(event) {
 
     const imc = calcImg(weight, height);
     patientsArray.push({ name, weight, height, fat, imc });
-    console.log(patientsArray);
+    // console.log(patientsArray);
+
+    const patientTr = document.createElement('tr');
+
+    [name, weight, height, fat, imc].forEach((data) => {
+        const patientTd = document.createElement('td');
+        patientTd.textContent = data;
+        patientTr.appendChild(patientTd);
+    });
+    const tablePatients = document.querySelector('#tabela-pacientes');
+    tablePatients.appendChild(patientTr);
 });
 
 
