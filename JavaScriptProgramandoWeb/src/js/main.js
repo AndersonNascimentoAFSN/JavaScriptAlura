@@ -2,24 +2,37 @@ const title = document.querySelector('.title');
 title.textContent = 'Aparecida Nutricionista';
 
 
-const patients = document.querySelectorAll('.paciente');
+function validationWeightAndHeight(weight, height) {
+    if(weight <= 0 || weight >= 1000) return { message: 'Peso inválido' };
+    if(height <= 0 || height >= 1000) return { message: 'Altura inválida' };
+    return true;
+}
 
+const patients = document.querySelectorAll('.paciente');
 patients.forEach((patient) => {
     const weightElement = patient.querySelector('.info-peso');
     const heightElement = patient.querySelector('.info-altura');
     const imcElement = patient.querySelector('.info-imc');
 
-    const imc = weightElement.textContent 
-        / (heightElement.textContent ** 2);
+    const weight = weightElement.textContent;
+    const height = heightElement.textContent;
 
+    const validation = validationWeightAndHeight(weight, height);
+
+    if(validation.message) {
+        imcElement.textContent = validation.message;
+        // patient.style.cssText = 
+        //     "color: red;\
+        //     font-weight: bold;\
+        //     background-Color: lightcoral";
+        patient.classList.add('patient__invalid');
+        return;
+    }
+
+    patient.classList.remove('patient__invalid');
+    const imc = weight / (height ** 2);
     imcElement.textContent = imc.toFixed(2);
 });
-
-
-
-
-
-
 
 function createElement(type, className = '', insertText = '') {
     const element = document.createElement(type);
