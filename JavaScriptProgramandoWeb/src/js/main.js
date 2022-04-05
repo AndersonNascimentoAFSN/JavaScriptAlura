@@ -34,57 +34,96 @@ patients.forEach((patient) => {
     imcElement.textContent = imc.toFixed(2);
 });
 
-function createElement(type, className = '', insertText = '') {
-    const element = document.createElement(type);
-    const text = document.createTextNode(insertText);
-    element.classList.add(className);
-    element.appendChild(text);
-    return element;
-}
-
-function insertElementIn(element, insertIn) {
-    insertIn.appendChild(element);
-}
-
-function createTrInTable(type, className, insertInElementId) {
-    const insertIn = document.querySelector(insertInElementId);
-    const arrayElementsContainer = [];
-
-    for (let index = 0; index < 5; index += 1) {
-        const element = createElement(type, className);
-        arrayElementsContainer.push(element);
+function calcImg(weight, height) {
+    console.log(weight, height);
+    const validation = validationWeightAndHeight(weight, height);
+    if(validation.message) {
+        return;
     }
 
-    arrayElementsContainer.forEach((element) => {
-        insertIn.appendChild(element);
-    });
-
-    return arrayElementsContainer;
+    const imc = weight / (height ** 2);
+    return imc.toFixed(2);
 }
 
-const dataPatients = [
-    {   id: 1,
-        name: 'Paulo',
-        weight: 100,
-        height: 2,
-        fat: 10,
-        imc: 0
-    },
-    {   id: 2,
-        name: 'João',
-        weight: 80,
-        height: 1.72,
-        fat: 40,
-        imc: 0
-    },
-    {   id: 3,
-        name: 'Erica',
-        weight: 54,
-        height: 1.64,
-        fat: 14,
-        imc: 0
-    },
-];
+const patientsArray = [];
+
+const buttonAdd = document.querySelector('#adicionar-paciente');
+
+buttonAdd.addEventListener("click", function(event) {
+    event.preventDefault();
+    // const nameElement = document.querySelector('#nome');
+    // const weightElement = document.querySelector('#peso');
+    // const heightElement = document.querySelector('#altura');
+    // const fatElement = document.querySelector('#gordura');
+
+    // const name = nameElement.value;
+    // const weight = weightElement.value;
+    // const height = heightElement.value;
+    // const fat = fatElement.value;
+
+    const form = document.querySelector('#form-adiciona');
+    const name = form.nome.value;
+    const weight = form.peso.value;
+    const height = form.altura.value;
+    const fat = form.gordura.value;
+
+    const imc = calcImg(weight, height);
+    patientsArray.push({ name, weight, height, fat, imc });
+    console.log(patientsArray);
+});
+
+
+// function createElement(type, className = '', insertText = '') {
+//     const element = document.createElement(type);
+//     const text = document.createTextNode(insertText);
+//     element.classList.add(className);
+//     element.appendChild(text);
+//     return element;
+// }
+
+// function insertElementIn(element, insertIn) {
+//     insertIn.appendChild(element);
+// }
+
+// function createTrInTable(type, className, insertInElementId) {
+//     const insertIn = document.querySelector(insertInElementId);
+//     const arrayElementsContainer = [];
+
+//     for (let index = 0; index < 5; index += 1) {
+//         const element = createElement(type, className);
+//         arrayElementsContainer.push(element);
+//     }
+
+//     arrayElementsContainer.forEach((element) => {
+//         insertIn.appendChild(element);
+//     });
+
+//     return arrayElementsContainer;
+// }
+
+// const dataPatients = [
+//     {   id: 1,
+//         name: 'Paulo',
+//         weight: 100,
+//         height: 2,
+//         fat: 10,
+//         imc: 0
+//     },
+//     {   id: 2,
+//         name: 'João',
+//         weight: 80,
+//         height: 1.72,
+//         fat: 40,
+//         imc: 0
+//     },
+//     {   id: 3,
+//         name: 'Erica',
+//         weight: 54,
+//         height: 1.64,
+//         fat: 14,
+//         imc: 0
+//     },
+// ];
 // const elementsArray = createTrInTable('tr', 'paciente', '#tabela-pacientes');
 // console.log(elementsArray);
 // const p = createElement('p', 'Olá, mundo');
